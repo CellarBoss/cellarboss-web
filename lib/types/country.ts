@@ -1,6 +1,3 @@
-export type Country = {
-  id?: number,
-  name?: string,
-  createdAt?: string,
-  updatedAt?: string,
+export interface Country extends GenericType, TrackedModification {
+
 }
