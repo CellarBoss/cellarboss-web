@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { Fragment, ReactNode, useState } from "react";
 import { useRouter } from 'next/navigation';
 import {
   ColumnDef,
@@ -92,10 +92,10 @@ export function DataTable<T>({ data, columns, defaultPageSize, filterColumnName,
           <FilterControl table={table} filterColumnName={filterColumnName} columnFilters={columnFilters} />
         </div>
         <div className="ml-auto flex items-center gap-2">
-          {buttons?.map((button) => (
-            <>
+          {buttons?.map((button, index) => (
+            <Fragment key={index}>
               {button}
-            </>
+            </Fragment>
           ))}
         </div>
       </div>
