@@ -40,8 +40,10 @@ export default function CountriesPage() {
   });
 
   if (isLoading) return <p>Loading countries...</p>;
-
+  if (!data?.ok) return <p>Error receiving data: {data?.error.message}</p>
   if (error) return <p>An error occurred: {error.message}</p>;
+
+  var countriesList = data.data;
 
   const columns = [
     {
@@ -81,7 +83,7 @@ export default function CountriesPage() {
   return (
     <section>
       <h2 className="text-2xl font-bold mb-4">Countries</h2>
-      <DataTable data={data} columns={columns} filterColumnName="name" defaultSortColumn="name" />
+      <DataTable data={countriesList} columns={columns} filterColumnName="name" defaultSortColumn="name" />
     </section>
   );
 }

@@ -5,12 +5,13 @@ import { Field } from "./Field";
 import { SaveButton } from "@/components/buttons/SaveButton";
 import { FieldConfig } from "@/lib/types/field";
 import { BackButton } from "../buttons/BackButton";
+import { ApiResult } from "@/lib/api/request";
 
 type GenericCardProps<T extends object> = {
   mode: "view" | "edit" | "create" | "clone";
   data?: T;
   fields: FieldConfig<T>[];
-  processSave?: (data: T) => Promise<boolean>;
+  processSave?: (data: T) => Promise<ApiResult<T>>;
   onChangeData?: (data: T) => void;
   redirectTo?: string;
 };
@@ -48,11 +49,22 @@ export function GenericCard<T extends object>({
     setIsProcessing(true);
     setErrorMessage(null);
     try {
-      await processSave(localData);
+      var result = await processSave(localData);
+
+      if(!result.ok) {
+        var errors = [];
+        for(let err in result.error.errors) {
+          errors.push(result.error.errors[err]);
+        }
+        setErrorMessage(result.error.message + ": " + errors.join(", "));
+        return;
+      }
+
       router.push(redirectTo);
     } catch (err: any) {
       console.error(err);
-      setErrorMessage(err.message || "Something went wrong.");
+      var message = JSON.parse(err.message).error;
+      setErrorMessage(message || "Something went wrong.");
     } finally {
       setIsProcessing(false);
     }

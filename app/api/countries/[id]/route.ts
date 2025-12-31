@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: number }> }
-): Promise<NextResponse> {
+) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -15,7 +15,7 @@ export async function GET(
   const { id } = await params;
 
   try {
-    const res = await fetch(
+    return fetch(
       `${process.env.CELLARBOSS_SERVER}/v1/country/${id}`,
       {
         headers: {
@@ -23,17 +23,6 @@ export async function GET(
         },
       }
     );
-
-    if (!res.ok) {
-      const errorData = await res.json();
-      return NextResponse.json(
-        { error: errorData?.message || "Failed to fetch country" },
-        { status: res.status }
-      );
-    }
-
-    const data = await res.json();
-    return NextResponse.json(data);
   } catch (err: any) {
     console.error(err);
     return NextResponse.json(
@@ -56,22 +45,12 @@ export async function DELETE(
   const { id } = await params;
 
   try {
-    const res = await fetch(`${process.env.CELLARBOSS_SERVER}/v1/country/${id}`, {
+    return fetch(`${process.env.CELLARBOSS_SERVER}/v1/country/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${session.accessToken}`,
       },
     });
-
-    if (!res.ok) {
-      const errorData = await res.json();
-      return NextResponse.json(
-        { error: errorData?.message || "Failed to delete country" },
-        { status: res.status }
-      );
-    }
-
-    return NextResponse.json({ success: true });
   } catch (err: any) {
     console.error(err);
     return NextResponse.json(
@@ -96,7 +75,7 @@ export async function POST(
   try {
     const body = await request.json();
 
-    const res = await fetch(`${process.env.CELLARBOSS_SERVER}/v1/country/${id}`, {
+    return fetch(`${process.env.CELLARBOSS_SERVER}/v1/country/${id}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${session.accessToken}`,
@@ -104,17 +83,6 @@ export async function POST(
       },
       body: JSON.stringify(body),
     });
-
-    if (!res.ok) {
-      const errorData = await res.json();
-      console.log("Error data:", errorData);
-      return NextResponse.json(
-        { error: errorData?.message || "Failed to update country" },
-        { status: res.status }
-      );
-    }
-
-    return NextResponse.json({ success: true });
   } catch (err: any) {
     console.error(err);
     return NextResponse.json(

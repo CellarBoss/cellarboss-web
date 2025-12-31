@@ -7,13 +7,13 @@ import { Country } from "@/lib/types/country";
 import { GenericCard } from "@/components/cards/GenericCard";
 import { countryFields } from "@/lib/fields/countries";
 import { updateCountry } from "@/lib/api/countries";
+import { ApiResult } from "@/lib/api/request";
 
-async function handleUpdate(country: Country): Promise<boolean> {
+async function handleUpdate(country: Country): Promise<ApiResult<Country>> {
   console.log("Update country:", country);
 
   try {
-    updateCountry(country);
-    return true;
+    return updateCountry(country);
   } catch (err: any) {
     console.error("Update failed:", err);
     throw err;
@@ -24,7 +24,7 @@ export default function EditCountryPage() {
   const params = useParams();
   const countryId = Number(params.id);
 
-  const { data: country, isLoading, error } = useQuery({
+  const { data: queryResult, isLoading, error } = useQuery({
     queryKey: ["country", countryId],
     queryFn: () => getCountryById(countryId),
     enabled: !!countryId,
@@ -32,7 +32,10 @@ export default function EditCountryPage() {
 
   if (isLoading) return <p>Loading country...</p>;
   if (error) return <p>An error occurred: {(error as any).message}</p>;
-  if (!country) return <p>Country not found.</p>;
+  if (!queryResult?.ok) return <p>Error receiving data: {queryResult?.error.message}</p>
+  if (!queryResult) return <p>Country not found.</p>;
+
+  var country = queryResult.data;
 
   return (
     <div className="p-6">

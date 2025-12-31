@@ -12,7 +12,7 @@ export default function ViewCountryPage() {
   const params = useParams();
   const countryId = params.id;
 
-  const { data: country, isLoading, error } = useQuery({
+  const { data: queryResult, isLoading, error } = useQuery({
     queryKey: ['country', countryId],
     queryFn: () => getCountryById(Number(countryId)), 
     enabled: !!countryId,
@@ -20,7 +20,10 @@ export default function ViewCountryPage() {
 
   if (isLoading) return <p>Loading country...</p>;
   if (error) return <p>An error occurred: {(error as any).message}</p>;
-  if (!country) return <p>Country not found.</p>;
+  if (!queryResult?.ok) return <p>Error receiving data: {queryResult?.error.message}</p>
+  if (!queryResult) return <p>Country not found.</p>;
+
+  var country = queryResult.data;
 
   return (
     <>

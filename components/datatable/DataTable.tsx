@@ -32,7 +32,7 @@ import { ArrowUp, ArrowDown } from "lucide-react";
 
 
 type DataTableProps<T> = {
-  data: T[];
+  data?: T[];
   columns: ColumnDef<T>[];
   defaultPageSize?: number;
   filterColumnName?: string;
@@ -58,6 +58,10 @@ export function DataTable<T>({ data, columns, defaultPageSize, filterColumnName,
   const [sorting, setSorting] = useState<SortingState>(
     defaultSortColumn ? [{ id: defaultSortColumn, desc: false }] : []
   )
+
+  if(data === undefined) {
+    data = [];
+  }
 
   const table = useReactTable({
     data,

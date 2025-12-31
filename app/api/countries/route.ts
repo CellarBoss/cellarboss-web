@@ -10,7 +10,7 @@ export async function GET() {
   }
 
   try {
-    const res = await fetch(
+    return fetch(
       `${process.env.CELLARBOSS_SERVER}/v1/country`,
       {
         headers: {
@@ -18,9 +18,6 @@ export async function GET() {
         },
       }
     );
-
-    const data = await res.json();
-    return NextResponse.json(data);
   } catch (err: any) {
     console.error(err);
     return NextResponse.json(
@@ -42,7 +39,7 @@ export async function POST(
   try {
     const body = await request.json();
 
-    const res = await fetch(`${process.env.CELLARBOSS_SERVER}/v1/country`, {
+    return fetch(`${process.env.CELLARBOSS_SERVER}/v1/country`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${session.accessToken}`,
@@ -50,17 +47,6 @@ export async function POST(
       },
       body: JSON.stringify(body),
     });
-
-    if (!res.ok) {
-      const errorData = await res.json();
-      console.log("Error data:", errorData);
-      return NextResponse.json(
-        { error: errorData?.message || "Failed to create country" },
-        { status: res.status }
-      );
-    }
-
-    return NextResponse.json({ success: true });
   } catch (err: any) {
     console.error(err);
     return NextResponse.json(
