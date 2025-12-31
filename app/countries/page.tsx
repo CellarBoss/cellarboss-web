@@ -9,6 +9,7 @@ import { DeleteButton } from "@/components/buttons/DeleteButton";
 import { useRouter } from 'next/navigation';
 import { deleteCountry } from "@/lib/api/countries";
 import { PageHeader } from "@/components/page/PageHeader";
+import { AddButton } from "@/components/buttons/AddButton";
 
 export default function CountriesPage() {
   const queryClient = useQueryClient();
@@ -84,7 +85,15 @@ export default function CountriesPage() {
   return (
     <section>
       <PageHeader title="Countries"/>
-      <DataTable<Country> data={countriesList} columns={columns} filterColumnName="name" defaultSortColumn="name" />
+      <DataTable<Country>
+        data={countriesList}
+        columns={columns}
+        filterColumnName="name"
+        defaultSortColumn="name"
+        buttons={[
+          <AddButton onClick={async () => router.push(`/countries/new`)} subject="Country" key="add" />
+        ]}
+        />
     </section>
   );
 }

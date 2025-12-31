@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { useRouter } from 'next/navigation';
 import {
   ColumnDef,
@@ -37,9 +37,10 @@ type DataTableProps<T> = {
   defaultPageSize?: number;
   filterColumnName?: string;
   defaultSortColumn?: string;
+  buttons?: ReactNode[];
 };
 
-export function DataTable<T>({ data, columns, defaultPageSize, filterColumnName, defaultSortColumn }: DataTableProps<T>) {
+export function DataTable<T>({ data, columns, defaultPageSize, filterColumnName, defaultSortColumn, buttons }: DataTableProps<T>) {
   const router = useRouter();
 
   if (defaultPageSize === undefined) {
@@ -91,7 +92,11 @@ export function DataTable<T>({ data, columns, defaultPageSize, filterColumnName,
           <FilterControl table={table} filterColumnName={filterColumnName} columnFilters={columnFilters} />
         </div>
         <div className="ml-auto flex items-center gap-2">
-          <AddButton onClick={async () => router.push(`/countries/new`)} subject="Country" />
+          {buttons?.map((button) => (
+            <>
+              {button}
+            </>
+          ))}
         </div>
       </div>
       <Table>
