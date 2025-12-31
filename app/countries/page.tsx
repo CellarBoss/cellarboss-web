@@ -8,6 +8,7 @@ import { EditButton } from "@/components/buttons/EditButton";
 import { DeleteButton } from "@/components/buttons/DeleteButton";
 import { useRouter } from 'next/navigation';
 import { deleteCountry } from "@/lib/api/countries";
+import { PageHeader } from "@/components/page/PageHeader";
 
 export default function CountriesPage() {
   const queryClient = useQueryClient();
@@ -82,8 +83,8 @@ export default function CountriesPage() {
 
   return (
     <section>
-      <h2 className="text-2xl font-bold mb-4">Countries</h2>
-      <DataTable data={countriesList} columns={columns} filterColumnName="name" defaultSortColumn="name" />
+      <PageHeader title="Countries"/>
+      <DataTable<Country> data={countriesList} columns={columns} filterColumnName="name" defaultSortColumn="name" />
     </section>
   );
 }

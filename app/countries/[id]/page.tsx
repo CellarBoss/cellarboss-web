@@ -26,13 +26,13 @@ export default function ViewCountryPage() {
   var country = queryResult.data;
 
   return (
-    <>
-      <PageHeader title={`Viewing Country ${country.name}`} />
+    <section>
+      <PageHeader title={`View Country - ${country.name}`} />
       <GenericCard<Country>
         mode="view"
         data={country}
         fields={countryFields}
       />
-    </>
+    </section>
   );
 }

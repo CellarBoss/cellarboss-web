@@ -5,6 +5,7 @@ import { GenericCard } from "@/components/cards/GenericCard";
 import { countryFields } from "@/lib/fields/countries";
 import { createCountry } from "@/lib/api/countries";
 import { ApiResult } from "@/lib/api/request";
+import { PageHeader } from "@/components/page/PageHeader";
 
 async function handleCreate(country: Country): Promise<ApiResult<Country>> {
   console.log("Create country:", country);
@@ -19,14 +20,15 @@ async function handleCreate(country: Country): Promise<ApiResult<Country>> {
 
 export default function NewCountryPage() {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">New Country</h1>
+    <section>
+      <PageHeader title="New Country"/>
       <GenericCard<Country>
         mode="create"
         fields={countryFields}
         processSave={handleCreate}
         redirectTo="/countries"
       />
-    </div>
+    </section>
+      
   );
 }

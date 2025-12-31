@@ -8,6 +8,7 @@ import { GenericCard } from "@/components/cards/GenericCard";
 import { countryFields } from "@/lib/fields/countries";
 import { updateCountry } from "@/lib/api/countries";
 import { ApiResult } from "@/lib/api/request";
+import { PageHeader } from "@/components/page/PageHeader";
 
 async function handleUpdate(country: Country): Promise<ApiResult<Country>> {
   console.log("Update country:", country);
@@ -38,8 +39,8 @@ export default function EditCountryPage() {
   var country = queryResult.data;
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Edit Country</h1>
+    <section>
+      <PageHeader title="Edit Country" />
       <GenericCard<Country>
         mode="edit"
         data={country}
@@ -47,6 +48,6 @@ export default function EditCountryPage() {
         processSave={handleUpdate}
         redirectTo="/countries"
       />
-    </div>
+    </section>
   );
 }
