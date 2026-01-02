@@ -3,7 +3,7 @@ interface GenericType {
   name: string,
 }
 
-interface TrackedModification {
+interface TrackedModification extends GenericType {
   createdAt?: string,
   updatedAt?: string,
 }
