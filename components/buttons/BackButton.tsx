@@ -15,7 +15,7 @@ export function BackButton({
   const router = useRouter();
 
   return (
-    <Button size="lg" variant="outline" onClick={() => router.back()}>
+    <Button size="lg" variant="outline" onClick={(e) => { e.preventDefault(); router.back()}}>
       <ArrowLeft /> {label}
     </Button>
   );

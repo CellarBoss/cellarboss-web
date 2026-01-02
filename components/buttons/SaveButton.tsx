@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Save, Loader2 } from "lucide-react"
 
 type SaveButtonProps = {
-  onSave: () => Promise<void>;
   isProcessing: boolean;
+  form: any;
 }
-export function SaveButton({ onSave, isProcessing }: SaveButtonProps) {
+export function SaveButton({ isProcessing, form }: SaveButtonProps) {
   return (
-    <Button size="lg" variant="outline" onClick={onSave} disabled={isProcessing}>
+    <Button size="lg" variant="outline" disabled={isProcessing} type="submit" form={form.name}>
       <Save />
           {isProcessing ? (
             <span className="inline-flex items-center gap-2">
