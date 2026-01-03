@@ -7,6 +7,8 @@ import { Country } from "@/lib/types/country";
 import { GenericCard } from "@/components/cards/GenericCard";
 import { countryFields } from "@/lib/fields/countries";
 import { PageHeader } from "@/components/page/PageHeader";
+import { LoadingCard } from "@/components/cards/LoadingCard";
+import { ErrorCard } from "@/components/cards/ErrorCard";
 
 export default function ViewCountryPage() {
   const params = useParams();
@@ -18,10 +20,9 @@ export default function ViewCountryPage() {
     enabled: !!countryId,
   });
 
-  if (isLoading) return <p>Loading country...</p>;
-  if (error) return <p>An error occurred: {(error as any).message}</p>;
-  if (!queryResult?.ok) return <p>Error receiving data: {queryResult?.error.message}</p>
-  if (!queryResult) return <p>Country not found.</p>;
+  if (isLoading) return <LoadingCard />;
+  if (error) return <ErrorCard message={`An error occurred: ` + (error as any).message} />;
+  if (!queryResult?.ok) return <ErrorCard message={`Error receiving data: ` + queryResult?.error.message } />;
 
   var country = queryResult.data;
 

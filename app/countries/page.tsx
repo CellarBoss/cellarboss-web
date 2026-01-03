@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import { deleteCountry } from "@/lib/api/countries";
 import { PageHeader } from "@/components/page/PageHeader";
 import { AddButton } from "@/components/buttons/AddButton";
+import { LoadingCard } from "@/components/cards/LoadingCard";
+import { ErrorCard } from "@/components/cards/ErrorCard";
 
 export default function CountriesPage() {
   const queryClient = useQueryClient();
@@ -44,9 +46,9 @@ export default function CountriesPage() {
     queryFn: getCountries,
   });
 
-  if (isLoading) return <p>Loading countries...</p>;
-  if (!data?.ok) return <p>Error receiving data: {data?.error.message}</p>
-  if (error) return <p>An error occurred: {error.message}</p>;
+  if (isLoading) return <LoadingCard />;
+  if (!data?.ok) return <ErrorCard message={`Error receiving data: ` + data?.error.message } />;
+  if (error) return <ErrorCard message={`An error occurred: ` +  error.message } />;
 
   var countriesList = data.data;
 

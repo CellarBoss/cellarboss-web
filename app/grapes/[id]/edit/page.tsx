@@ -9,6 +9,8 @@ import { grapeFields } from "@/lib/fields/grapes";
 import { updateGrape } from "@/lib/api/grapes";
 import { ApiResult } from "@/lib/api/frontend";
 import { PageHeader } from "@/components/page/PageHeader";
+import { LoadingCard } from "@/components/cards/LoadingCard";
+import { ErrorCard } from "@/components/cards/ErrorCard";
 
 async function handleUpdate(grape: Grape): Promise<ApiResult<Grape>> {
   console.log("Update grape:", grape);
@@ -31,10 +33,9 @@ export default function EditGrapePage() {
     enabled: !!grapeId,
   });
 
-  if (isLoading) return <p>Loading grape...</p>;
-  if (error) return <p>An error occurred: {(error as any).message}</p>;
-  if (!queryResult?.ok) return <p>Error receiving data: {queryResult?.error.message}</p>
-  if (!queryResult) return <p>Grape not found.</p>;
+  if (isLoading) return <LoadingCard />;
+  if (error) return <ErrorCard message={`An error occurred: ` + (error as any).message} />;
+  if (!queryResult?.ok) return <ErrorCard message={`Error receiving data: ` + queryResult?.error.message } />;
 
   var grape = queryResult.data;
 

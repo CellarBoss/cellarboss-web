@@ -9,6 +9,8 @@ import { countryFields } from "@/lib/fields/countries";
 import { updateCountry } from "@/lib/api/countries";
 import { ApiResult } from "@/lib/api/frontend";
 import { PageHeader } from "@/components/page/PageHeader";
+import { LoadingCard } from "@/components/cards/LoadingCard";
+import { ErrorCard } from "@/components/cards/ErrorCard";
 
 async function handleUpdate(country: Country): Promise<ApiResult<Country>> {
   console.log("Update country:", country);
@@ -31,10 +33,9 @@ export default function EditCountryPage() {
     enabled: !!countryId,
   });
 
-  if (isLoading) return <p>Loading country...</p>;
-  if (error) return <p>An error occurred: {(error as any).message}</p>;
-  if (!queryResult?.ok) return <p>Error receiving data: {queryResult?.error.message}</p>
-  if (!queryResult) return <p>Country not found.</p>;
+  if (isLoading) return <LoadingCard />;
+  if (error) return <ErrorCard message={`An error occurred: ` + (error as any).message} />;
+  if (!queryResult?.ok) return <ErrorCard message={`Error receiving data: ` + queryResult?.error.message } />;
 
   var country = queryResult.data;
 

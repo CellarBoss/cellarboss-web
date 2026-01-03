@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import { PageHeader } from "@/components/page/PageHeader";
 import { AddButton } from "@/components/buttons/AddButton";
 import { getCountries } from "@/lib/api/countries";
+import { LoadingCard } from "@/components/cards/LoadingCard";
+import { ErrorCard } from "@/components/cards/ErrorCard";
 
 export default function RegionsPage() {
   const queryClient = useQueryClient();
@@ -26,7 +28,7 @@ export default function RegionsPage() {
       if (!row.id) throw new Error("Invalid region ID");
 
       var delResult = await deleteRegion(row.id);
-      if(!delResult.ok) {
+      if (!delResult.ok) {
         throw new Error("Error deleting region: " + delResult.error.message);
       }
 
@@ -49,11 +51,12 @@ export default function RegionsPage() {
     queryFn: getCountries,
   })
 
-  if (regionQuery.isLoading || countryQuery.isLoading) return <p>Loading regions...</p>;
-  if (!regionQuery.data?.ok) return <p>Error receiving data: {regionQuery.data?.error.message}</p>
-  if (!countryQuery.data?.ok) return <p>Error receiving data: {countryQuery.data?.error.message}</p>
-  if (regionQuery.error) return <p>An error occurred: {regionQuery.error.message}</p>;
-  if (countryQuery.error) return <p>An error occurred: {countryQuery.error.message}</p>;
+  if (regionQuery.isLoading || countryQuery.isLoading) return <LoadingCard />;
+
+  if (!regionQuery.data?.ok) return <ErrorCard message={`Error receiving data: ` + regionQuery.data?.error.message} />;
+  if (!countryQuery.data?.ok) return <ErrorCard message={`Error receiving data: ` + countryQuery.data?.error.message} />;
+  if (regionQuery.error) return <ErrorCard message={`An error occurred: ` + (regionQuery.error as any).message} />;
+  if (countryQuery.error) return <ErrorCard message={`An error occurred: ` + (countryQuery.error as any).message} />;
 
   var regionsList = regionQuery.data.data;
   var countryList = countryQuery.data.data;

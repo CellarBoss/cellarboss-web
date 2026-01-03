@@ -9,6 +9,8 @@ import { useRouter } from 'next/navigation';
 import { PageHeader } from "@/components/page/PageHeader";
 import { AddButton } from "@/components/buttons/AddButton";
 import { deleteGrape, getGrapes } from "@/lib/api/grapes";
+import { LoadingCard } from "@/components/cards/LoadingCard";
+import { ErrorCard } from "@/components/cards/ErrorCard";
 
 export default function GrapesPage() {
   const queryClient = useQueryClient();
@@ -43,9 +45,9 @@ export default function GrapesPage() {
     queryFn: getGrapes,
   });
 
-  if (isLoading) return <p>Loading grapes...</p>;
-  if (!data?.ok) return <p>Error receiving data: {data?.error.message}</p>
-  if (error) return <p>An error occurred: {error.message}</p>;
+  if (isLoading) return <LoadingCard />;
+  if (error) return <ErrorCard message={`An error occurred: ` + (error as any).message} />;
+  if (!data?.ok) return <ErrorCard message={`Error receiving data: ` + data?.error.message } />;
 
   var grapesList = data.data;
 

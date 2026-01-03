@@ -8,6 +8,8 @@ import { ApiResult } from "@/lib/api/frontend";
 import { PageHeader } from "@/components/page/PageHeader";
 import { getRegionById, updateRegion } from "@/lib/api/regions";
 import { regionFields } from "@/lib/fields/regions";
+import { LoadingCard } from "@/components/cards/LoadingCard";
+import { ErrorCard } from "@/components/cards/ErrorCard";
 
 async function handleUpdate(region: Region): Promise<ApiResult<Region>> {
   console.log("Update region:", region);
@@ -30,10 +32,9 @@ export default function EditRegionPage() {
     enabled: !!regionId,
   });
 
-  if (isLoading) return <p>Loading region...</p>;
-  if (error) return <p>An error occurred: {(error as any).message}</p>;
-  if (!queryResult?.ok) return <p>Error receiving data: {queryResult?.error.message}</p>
-  if (!queryResult) return <p>Region not found.</p>;
+  if (isLoading) return <LoadingCard />;
+  if (error) return <ErrorCard message={`An error occurred: ` + (error as any).message} />;
+  if (!queryResult?.ok) return <ErrorCard message={`Error receiving data: ` + queryResult?.error.message } />;
 
   var region = queryResult.data;
 

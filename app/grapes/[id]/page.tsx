@@ -7,6 +7,8 @@ import { Grape } from "@/lib/types/grape";
 import { GenericCard } from "@/components/cards/GenericCard";
 import { grapeFields } from "@/lib/fields/grapes";
 import { PageHeader } from "@/components/page/PageHeader";
+import { LoadingCard } from "@/components/cards/LoadingCard";
+import { ErrorCard } from "@/components/cards/ErrorCard";
 
 export default function ViewGrapePage() {
   const params = useParams();
@@ -18,10 +20,9 @@ export default function ViewGrapePage() {
     enabled: !!grapeId,
   });
 
-  if (isLoading) return <p>Loading grape...</p>;
-  if (error) return <p>An error occurred: {(error as any).message}</p>;
-  if (!queryResult?.ok) return <p>Error receiving data: {queryResult?.error.message}</p>
-  if (!queryResult) return <p>Grape not found.</p>;
+  if (isLoading) return <LoadingCard />;
+  if (error) return <ErrorCard message={`An error occurred: ` + (error as any).message} />;
+  if (!queryResult?.ok) return <ErrorCard message={`Error receiving data: ` + queryResult?.error.message } />;
 
   var grape = queryResult.data;
 
