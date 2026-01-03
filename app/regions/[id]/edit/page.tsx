@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from 'next/navigation';
 import { Region } from "@/lib/types/region";
 import { GenericCard } from "@/components/cards/GenericCard";
-import { ApiResult } from "@/lib/api/request";
+import { ApiResult } from "@/lib/api/frontend";
 import { PageHeader } from "@/components/page/PageHeader";
 import { getRegionById, updateRegion } from "@/lib/api/regions";
 import { regionFields } from "@/lib/fields/regions";

@@ -7,7 +7,7 @@ import { Country } from "@/lib/types/country";
 import { GenericCard } from "@/components/cards/GenericCard";
 import { countryFields } from "@/lib/fields/countries";
 import { updateCountry } from "@/lib/api/countries";
-import { ApiResult } from "@/lib/api/request";
+import { ApiResult } from "@/lib/api/frontend";
 import { PageHeader } from "@/components/page/PageHeader";
 
 async function handleUpdate(country: Country): Promise<ApiResult<Country>> {

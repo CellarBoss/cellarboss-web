@@ -1,7 +1,7 @@
 "use client";
 
 import { Country } from "../types/country";
-import { ApiResult, makeRequest } from "./request";
+import { ApiResult, makeRequest } from "./frontend";
 
 export async function getCountries(): Promise<ApiResult<Country[]>> {
   return makeRequest<Country[]>("/api/countries", "GET");
