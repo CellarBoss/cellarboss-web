@@ -8,7 +8,7 @@ type SaveButtonProps = {
 }
 export function SaveButton({ isProcessing, form }: SaveButtonProps) {
   return (
-    <Button size="lg" variant="outline" disabled={isProcessing} type="submit" form={form.name}>
+    <Button size="lg" variant="outline" disabled={isProcessing} type="submit" form={form.name} className="cursor-pointer">
       <Save />
           {isProcessing ? (
             <span className="inline-flex items-center gap-2">

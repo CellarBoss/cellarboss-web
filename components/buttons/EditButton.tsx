@@ -6,7 +6,7 @@ type EditButtonProps = {
 }
 export function EditButton({ onEdit }: EditButtonProps) {
   return (
-    <Button size="sm" variant="outline" onClick={onEdit}>
+    <Button size="sm" variant="outline" onClick={onEdit} className="cursor-pointer">
       <Pencil />
     </Button>
   )

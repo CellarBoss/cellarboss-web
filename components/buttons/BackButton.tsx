@@ -15,7 +15,7 @@ export function BackButton({
   const router = useRouter();
 
   return (
-    <Button size="lg" variant="outline" onClick={(e) => { e.preventDefault(); router.back()}}>
+    <Button size="lg" variant="outline" onClick={(e) => { e.preventDefault(); router.back()}} className="cursor-pointer">
       <ArrowLeft /> {label}
     </Button>
   );

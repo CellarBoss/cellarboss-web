@@ -10,7 +10,7 @@ export function PaginationSelector({ table, pageSize }: PaginationSelectorProps)
     <>
       <span>Rows per page</span>
       <select
-        className="border rounded px-2 py-1"
+        className="border rounded px-2 py-1 cursor-pointer"
         value={pageSize}
         onChange={(e) => table.setPageSize(Number(e.target.value))}
       >

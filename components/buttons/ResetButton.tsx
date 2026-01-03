@@ -8,7 +8,7 @@ type ResetButtonProps = {
 }
 export function ResetButton({ isProcessing, form }: ResetButtonProps) {
   return (
-    <Button type="button" size="lg" variant="outline" disabled={isProcessing} onClick={() => form.reset()}>
+    <Button type="button" size="lg" variant="outline" disabled={isProcessing} onClick={() => form.reset()} className="cursor-pointer">
       <PencilOff />
       Reset
     </Button>

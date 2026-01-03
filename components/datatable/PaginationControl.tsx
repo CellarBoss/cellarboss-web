@@ -29,7 +29,7 @@ export function PaginationControl({ table, pagination, pageCount }: PaginationCo
           <PaginationPrevious
             onClick={() => table.previousPage()}
             className={cn(
-              "h-9 px-3 rounded-md border",
+              "h-9 px-3 rounded-md border cursor-pointer",
               !canPrevious && "opacity-50 pointer-events-none"
             )}
           />
@@ -45,7 +45,7 @@ export function PaginationControl({ table, pagination, pageCount }: PaginationCo
           <PaginationNext
             onClick={() => table.nextPage()}
             className={cn(
-              "h-9 px-3 rounded-md border",
+              "h-9 px-3 rounded-md border cursor-pointer",
               !canNext && "opacity-50 pointer-events-none"
             )}
           />

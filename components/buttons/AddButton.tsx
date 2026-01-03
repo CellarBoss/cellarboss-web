@@ -7,7 +7,7 @@ type AddButtonProps = {
 }
 export function AddButton({ onClick, subject }: AddButtonProps) {
   return (
-    <Button size="lg" variant="outline" onClick={onClick}>
+    <Button size="lg" variant="outline" onClick={onClick} className="cursor-pointer">
       <Plus /> Create new {subject}
     </Button>
   )

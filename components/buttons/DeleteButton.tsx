@@ -41,7 +41,7 @@ export function DeleteButton({ onDelete, itemDescription }: DeleteButtonProps) {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <Button size="sm" variant="outline">
+        <Button size="sm" variant="outline" className="cursor-pointer">
           <Trash />
         </Button>
       </AlertDialogTrigger>
