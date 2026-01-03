@@ -42,7 +42,7 @@ function CountrySelector({ editable, field }: SelectorProps) {
   );
 }
 
-export function GenericField<T extends GenericType>({
+export function GenericField({
   form,
   name,
   label,
