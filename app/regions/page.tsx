@@ -25,7 +25,10 @@ export default function RegionsPage() {
     try {
       if (!row.id) throw new Error("Invalid region ID");
 
-      await deleteRegion(row.id);
+      var delResult = await deleteRegion(row.id);
+      if(!delResult.ok) {
+        throw new Error("Error deleting region: " + delResult.error.message);
+      }
 
       queryClient.invalidateQueries({ queryKey: ['regions'] })
 

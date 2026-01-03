@@ -23,9 +23,12 @@ export default function CountriesPage() {
     console.log("Delete row:", row);
 
     try {
-      if(!row.id) throw new Error("Invalid country ID");
+      if (!row.id) throw new Error("Invalid country ID");
 
-      await deleteCountry(row.id);
+      var delResult = await deleteCountry(row.id);
+      if (!delResult.ok) {
+        throw new Error("Error deleting country: " + delResult.error.message);
+      }
 
       queryClient.invalidateQueries({ queryKey: ['countries'] })
 
@@ -84,7 +87,7 @@ export default function CountriesPage() {
 
   return (
     <section>
-      <PageHeader title="Countries"/>
+      <PageHeader title="Countries" />
       <DataTable<Country>
         data={countriesList}
         columns={columns}
@@ -93,7 +96,7 @@ export default function CountriesPage() {
         buttons={[
           <AddButton onClick={async () => router.push(`/countries/new`)} subject="Country" key="add" />
         ]}
-        />
+      />
     </section>
   );
 }
