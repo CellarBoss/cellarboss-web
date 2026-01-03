@@ -64,7 +64,7 @@ export function GenericField({
                 <Input
                   id={field.name}
                   name={field.name}
-                  value={field.state.value}
+                  value={field.state.value ?? ""}
                   type="text"
                   disabled={!editable}
                   onChange={(e) => field.handleChange(e.target.value)}

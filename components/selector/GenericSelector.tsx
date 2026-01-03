@@ -27,7 +27,7 @@ export function GenericSelector<T extends GenericType>({
       onValueChange={(e) => field.handleChange(e)}
       aria-invalid={isInvalid}
       disabled={!editable}
-      value={field.state.value}
+      value={field.state.value ?? ""}
     >
       <SelectTrigger>
         <SelectValue placeholder="Choose an option..." />
