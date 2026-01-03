@@ -11,6 +11,7 @@ import { FieldConfig } from "@/lib/types/field";
 import { BackButton } from "@/components/buttons/BackButton";
 import { ApiResult } from "@/lib/api/frontend";
 import { stringifyValues } from "@/lib/functions";
+import * as z from "zod";
 
 type GenericCardProps<T extends GenericType> = {
   mode: "view" | "edit" | "create" | "clone";
@@ -33,8 +34,21 @@ export function GenericCard<T extends GenericType>({
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const zodShape: Record<string, z.ZodTypeAny> = {};
+
+  fields.forEach((field) => {
+    if (field.validator) {
+      zodShape[field.key as string] = field.validator;
+    }
+  });
+
+  const zodSchema = z.object(zodShape);
+
   const form = useForm({
     defaultValues: stringifyValues(data), // We must stringify to allow proper comparison within Select elements
+    validators: {
+      onChange: zodSchema,
+    },
     onSubmit: async ({ value }) => {
       if (!processSave) {
         console.error("Tried to save but no processSave function provided.");
@@ -91,7 +105,7 @@ export function GenericCard<T extends GenericType>({
 
         <span className="flex items-center gap-4 mt-4">
           <BackButton />
-          {editable && (
+          {mode === "edit" && (
             <ResetButton isProcessing={isProcessing} form={form} />
           )}
           {editable && (
