@@ -29,9 +29,9 @@ const menuItems = {
   ],
   "Storage": [
     { title: "Storages", url: "/storages", icon: Refrigerator },
-  ],
-  "Locations": [
     { title: "Locations", url: "/locations", icon: MapPin },
+  ],
+  "Geography": [
     { title: "Regions", url: "/regions", icon: Flag },
     { title: "Countries", url: "/countries", icon: Earth },
   ],
